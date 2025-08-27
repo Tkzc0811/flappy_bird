@@ -4,7 +4,6 @@ html, body {
   height: 100%;
   background: #70c5ce; /* 天空 */
   overflow: hidden;
-  -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }

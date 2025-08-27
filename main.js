@@ -294,18 +294,27 @@
     ctx.lineWidth = 6;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold ' + Math.round(viewWidth * 0.08) + 'px system-ui, -apple-system, Arial, sans-serif';
+    const s = Math.min(viewWidth, viewHeight);
+    const titleSize = Math.round(s * 0.08);
+    const tipSize = Math.round(s * 0.05);
+    const bestSize = Math.round(s * 0.06);
+
+    const baseY = viewHeight * 0.35;
+
+    ctx.font = 'bold ' + titleSize + 'px system-ui, -apple-system, Arial, sans-serif';
     const title = '点击/触控/空格开始';
-    ctx.strokeText(title, viewWidth / 2, viewHeight * 0.35);
-    ctx.fillText(title, viewWidth / 2, viewHeight * 0.35);
+    ctx.strokeText(title, viewWidth / 2, baseY);
+    ctx.fillText(title, viewWidth / 2, baseY);
 
-    ctx.font = '600 ' + Math.round(viewWidth * 0.05) + 'px system-ui, -apple-system, Arial, sans-serif';
+    const tipY = Math.round(baseY + titleSize * 1.2);
+    ctx.font = '600 ' + tipSize + 'px system-ui, -apple-system, Arial, sans-serif';
     const tip = '上升：点击屏幕 / 触控 / 空格';
-    ctx.strokeText(tip, viewWidth / 2, viewHeight * 0.35 + 60);
-    ctx.fillText(tip, viewWidth / 2, viewHeight * 0.35 + 60);
+    ctx.strokeText(tip, viewWidth / 2, tipY);
+    ctx.fillText(tip, viewWidth / 2, tipY);
 
-    // 最佳成绩
-    drawBestScore();
+    // 最佳成绩（基于短边字号与自适应间距）
+    const bestY = Math.round(tipY + tipSize * 1.4);
+    drawBestScore(bestY, bestSize);
   }
 
   function drawGameOver() {
@@ -314,32 +323,45 @@
     ctx.lineWidth = 6;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold ' + Math.round(viewWidth * 0.1) + 'px system-ui, -apple-system, Arial, sans-serif';
-    ctx.strokeText('游戏结束', viewWidth / 2, viewHeight * 0.32);
-    ctx.fillText('游戏结束', viewWidth / 2, viewHeight * 0.32);
+    const s = Math.min(viewWidth, viewHeight);
+    const titleSize = Math.round(s * 0.1);
+    const scoreSize = Math.round(s * 0.06);
+    const bestSize = Math.round(s * 0.06);
+    const tipSize = Math.round(s * 0.05);
 
-    ctx.font = '600 ' + Math.round(viewWidth * 0.06) + 'px system-ui, -apple-system, Arial, sans-serif';
-    const s = `分数 ${score}`;
-    ctx.strokeText(s, viewWidth / 2, viewHeight * 0.32 + 70);
-    ctx.fillText(s, viewWidth / 2, viewHeight * 0.32 + 70);
+    const baseY = viewHeight * 0.32;
 
-    drawBestScore(viewHeight * 0.32 + 120);
+    ctx.font = 'bold ' + titleSize + 'px system-ui, -apple-system, Arial, sans-serif';
+    ctx.strokeText('游戏结束', viewWidth / 2, baseY);
+    ctx.fillText('游戏结束', viewWidth / 2, baseY);
 
-    ctx.font = '600 ' + Math.round(viewWidth * 0.05) + 'px system-ui, -apple-system, Arial, sans-serif';
+    const scoreY = Math.round(baseY + titleSize * 1.2);
+    ctx.font = '600 ' + scoreSize + 'px system-ui, -apple-system, Arial, sans-serif';
+    const sText = `分数 ${score}`;
+    ctx.strokeText(sText, viewWidth / 2, scoreY);
+    ctx.fillText(sText, viewWidth / 2, scoreY);
+
+    const bestY = Math.round(scoreY + scoreSize * 1.3);
+    drawBestScore(bestY, bestSize);
+
+    const tipY = Math.round(bestY + bestSize * 1.3);
+    ctx.font = '600 ' + tipSize + 'px system-ui, -apple-system, Arial, sans-serif';
     const tip = '点击/触控/空格 重新开始';
-    ctx.strokeText(tip, viewWidth / 2, viewHeight * 0.32 + 180);
-    ctx.fillText(tip, viewWidth / 2, viewHeight * 0.32 + 180);
+    ctx.strokeText(tip, viewWidth / 2, tipY);
+    ctx.fillText(tip, viewWidth / 2, tipY);
   }
 
-  function drawBestScore(y) {
+  function drawBestScore(y, size) {
     const text = `最佳 ${bestScore}`;
     ctx.fillStyle = '#fff';
     ctx.strokeStyle = 'rgba(0,0,0,0.3)';
     ctx.lineWidth = 4;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.font = 'bold ' + Math.round(viewWidth * 0.06) + 'px system-ui, -apple-system, Arial, sans-serif';
-    const yy = y != null ? y : viewHeight * 0.35 + 110;
+    const s = Math.min(viewWidth, viewHeight);
+    const fontSize = Math.round(size || s * 0.06);
+    ctx.font = 'bold ' + fontSize + 'px system-ui, -apple-system, Arial, sans-serif';
+    const yy = y !== undefined ? y : Math.round(viewHeight * 0.35 + fontSize * 1.8);
     ctx.strokeText(text, viewWidth / 2, yy);
     ctx.fillText(text, viewWidth / 2, yy);
   }
