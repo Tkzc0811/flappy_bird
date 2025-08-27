@@ -1,0 +1,20 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #70c5ce; /* 天空 */
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+canvas#game {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  touch-action: manipulation; /* 减少移动端延迟与双击缩放 */
+}
+
+
